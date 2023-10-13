@@ -239,7 +239,7 @@ table td {
   border-collapse: collapse;
   padding:5px;
 }
-th {
+.product-page th {
   width: 30%;
   font-weight: 600;
 }
@@ -586,4 +586,27 @@ td {
 }
 .w-20 {
   width:20%;
+}
+/* ---order-page---- */
+.order-page img {
+  width: 120px;
+}
+.order-list .cates,
+.order-list .dis,
+.order-list .stock {
+  display:none;
+}
+.order-list .price {
+  font-size: 18px;
+  margin-top: 15px;
+  text-align: center;
+}
+.order-list .title-sub {
+  text-align: center;
+}
+.order-list h1 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 50px;
 }

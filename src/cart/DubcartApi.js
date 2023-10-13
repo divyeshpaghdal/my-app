@@ -1,10 +1,17 @@
-import { createContext, useState, useEffect, useContext } from 'react'
+import { createContext, useState, useEffect, useContext } from 'react';
+import { addDoc, collection,query,onSnapshot,orderBy,getDocs} from '@firebase/firestore'
+import { db } from '../firebase';
+import { useAuth } from '../AuthcontextApi';
 
 const CartContext = createContext()
 
 const CartdubProvider = ({ children }) => {
+  const {user} = useAuth()
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
+  const [ordergetdata, setordergetdata] = useState([])
+  const [getorderlist, setgetorderlist] = useState([])
   let gettotal
+  let result
 
   const addToCart = (item) => {
     console.log(item)
@@ -34,6 +41,80 @@ const CartdubProvider = ({ children }) => {
    }))
  }
  
+// ----payment----
+const checkout = async () => {
+  var options = {
+    key: "rzp_test_BtiGp81nTK7xFW",
+    key_secret: "X12QhH8bscaraIO23CRFWn4p",
+    amount: parseInt(gettotal * 100),
+    currency: "INR",
+    order_receipt: 'order_rcptid_' + user?.photoURL,
+    name: "E-Bharat",
+    description: "for testing purpose",
+    handler: function (response) {
+
+      console.log('Payment Successful')
+      const paymentId = response.razorpay_payment_id
+      const userinfodetails = {
+        email:user?.email,
+        url:user?.photoURL,
+        displayName:user?.displayName
+      }
+  
+      const orderInfo = {
+        paymentId,
+        cartItems,
+        gettotal,
+        userinfodetails,
+        date: new Date().toLocaleString(
+          "en-US",
+          {
+            month: "short",
+            day: "2-digit",
+            year: "numeric",
+          }
+        )
+      }
+
+      try {
+        result = addDoc(collection(db, "orders"), orderInfo)
+        console.log(result,"80")
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    theme: {
+      color: "#3399cc"
+    }
+  };
+  var pay = new window.Razorpay(options);
+  pay.open();
+  console.log(pay)
+  getorderdetails()
+}
+
+// ---ordergetdata---
+const getorderdetails = async () => {
+  try {
+    const userRef = collection(db,"orders")
+    const ordervalue = await getDocs(userRef)
+    let orderbox = []
+    ordervalue.forEach((doc) => {
+      orderbox.push({...doc.data()})
+  })
+      setordergetdata(orderbox)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const submitlist = (ordermenu) => {
+  console.log(ordermenu)
+  setgetorderlist(ordermenu)
+ }
+ 
+
 
 
   useEffect(() => {
@@ -47,6 +128,11 @@ const CartdubProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    getorderdetails()
+  }, [result])
+  
+
   return (
     <CartContext.Provider
       value={{
@@ -54,9 +140,11 @@ const CartdubProvider = ({ children }) => {
         addToCart,
         setCartItems,
         removeFromCart,
-        gettotal
-        //clearCart,
-        //getCartTotal,
+        gettotal,
+        checkout,
+        ordergetdata,
+        submitlist,
+        getorderlist
       }}
     >
       {children}

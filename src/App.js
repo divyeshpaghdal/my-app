@@ -15,6 +15,7 @@ import Admin from './User/Admin';
 import AboutDetails from './pages/AboutDetails';
 import Cart from './cart/Cart';
 import Pagination from './Pagination';
+import OrdergetList from './User/OrdergetList';
 
 const App = () => {
 return (
@@ -31,8 +32,9 @@ return (
               <Route path="/upcoming" element={<Upcoming/>} />  
               <Route path="/admin" element={<Admin/>} />  
               <Route path="/pagination" element={<Pagination/>} />  
-             < Route path="/product/:id" element={<Productinfo/>} />  
-             <Route path="/cart" element={<Cart/>} />  
+              <Route path="/product/:id" element={<Productinfo/>} />  
+              <Route path="/cart" element={<Cart/>} />  
+              <Route path="/orderlist" element={<OrdergetList/>} />  
              
         </Route>
       </Routes>

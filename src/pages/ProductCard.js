@@ -9,12 +9,12 @@ const ProductCard = ({title,imgurl,des,price,category,discount,stock,id}) => {
                 <div className='img-box'>
                     <img src={imgurl} />
                 </div>
-                <Link to={`/product/${id}`}><h5>{title?.slice(0, 50)}</h5></Link>
+                <Link to={`/product/${id}`}><h5 className='title-sub'>{title?.slice(0, 50)}</h5></Link>
                 <p>{des?.slice(0, 100)}</p>
-                <h6>Price : {price}</h6>
-                <h6>Category : {category}</h6>
-                <h6>Discount : {discount}</h6>
-                <h6>Stock : {stock}</h6>
+                <h6 className='price'>Price : {price}</h6>
+                <h6 className='cates'>Category : {category}</h6>
+                <h6 className='dis'>Discount : {discount}</h6>
+                <h6 className='stock'>Stock : {stock}</h6>
             </div>
         </div>
     )

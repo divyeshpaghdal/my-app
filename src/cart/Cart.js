@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNewcart } from './DubcartApi'
 
+
+
 const Cart = () => {
-  const {cartItems,removeFromCart,gettotal,setCartItems} = useNewcart()
- 
+  const {cartItems,removeFromCart,gettotal,setCartItems,checkout} = useNewcart()
+
  const setinc = (incid) => {
   const {idd,stocckk} = incid
   console.log(incid)
@@ -50,6 +52,10 @@ const Cart = () => {
 ));
  }}
 
+// ---payment---
+
+
+
   return (
     <div className='container padding-80 px-0 cart-page'>
       <div className="row">
@@ -91,6 +97,7 @@ const Cart = () => {
             </tbody>
           </table>
          <h3>{gettotal}</h3>
+         <button onClick={checkout}>checkout</button>
         </div>
       </div>
 
