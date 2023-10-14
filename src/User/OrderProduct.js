@@ -3,7 +3,7 @@ import { useNewcart } from '../cart/DubcartApi'
 import { Link } from 'react-router-dom'
 
 const OrderProduct = () => {
-  const {ordergetdata,submitlist} = useNewcart()
+  const {ordergetdata} = useNewcart()
   console.log(ordergetdata)
 
   return (
@@ -35,7 +35,7 @@ const OrderProduct = () => {
                 <td>{e?.date}</td>
                 <td>{e?.gettotal}</td>
                 <td>
-                <Link to="/orderlist"><button onClick={() => submitlist(e?.cartItems)}>order List</button></Link>
+                <Link to={`/orderlist/${e?.paymentId}`}><button>order List</button></Link>
                 </td>
               </tr>
             )

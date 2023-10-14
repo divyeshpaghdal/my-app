@@ -1,20 +1,25 @@
 import React from 'react'
 import { useNewcart } from '../cart/DubcartApi'
 import ProductCard from '../pages/ProductCard'
+import { useParams } from 'react-router'
 
 const OrdergetList = () => {
-   const {getorderlist} = useNewcart()
-   console.log(getorderlist)
+   const {ordergetdata} = useNewcart()
+   const {id} = useParams()  
+   console.log(ordergetdata,id)
    
-
+   const findorderId = ordergetdata?.find((e)=> {
+    return e.paymentId === id
+   })
+  console.log(findorderId,"findorderId")
 
   return (
     <div className='container padding-80 order-list'>
         <h1>Your Order List</h1>
         <div className='row'>
         {
-            getorderlist?.map((e)=> {
-                const {title,price,category,des,img,discount,stock,id} = e
+            findorderId?.cartItems?.map((e)=> {
+                const {title,stock,id,price,img} = e
                 return (
                     <ProductCard key={title} title={title} price={price} imgurl={img} stock={stock} id={id}/>
                 )

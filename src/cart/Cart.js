@@ -17,15 +17,14 @@ const Cart = () => {
     if (ifincmatch) {
       setCartItems(cartItems?.map((cartItem) =>
           cartItem.id === idd
-            ? { ...cartItem, quantity:ifincmatch.quantity + 1}
-            : cartItem
+            ? { ...cartItem, quantity:ifincmatch.quantity + 1} : cartItem
       ));
     }
     if(ifincmatch.quantity + 1 > stocckk) {
       setCartItems(cartItems?.map((cartItem) =>
           cartItem.id === idd
-            ? { ...cartItem, quantity:ifincmatch.quantity}
-            : cartItem
+            ? { ...cartItem, quantity:ifincmatch.quantity} : cartItem
+      
       ));
     }
  }
@@ -39,18 +38,17 @@ const Cart = () => {
      console.log(ifincmatch)
      setCartItems(cartItems?.map((cartItem) =>
          cartItem.id === incid
-           ? { ...cartItem,quantity:ifincmatch.quantity - 1}
-           : cartItem
+           ? { ...cartItem,quantity:ifincmatch.quantity - 1} : cartItem
      ));
-   }
-
+   } 
  if(ifincmatch.quantity <= 1) {
-  setCartItems(cartItems?.map((cartItem) =>
-  cartItem.id === incid
-    ? { ...cartItem, quantity:1}
-    : cartItem
-));
- }}
+//   setCartItems(cartItems?.map((cartItem) =>
+//   cartItem.id === incid
+//     ? { ...cartItem, quantity:1} : cartItem
+// ));
+removeFromCart(incid)
+ }
+} 
 
 // ---payment---
 

@@ -1,10 +1,13 @@
 import React from 'react'
 import { useAuth } from '../AuthcontextApi'
 import { Link } from 'react-router-dom'
+import { useNewcart } from '../cart/DubcartApi'
 
 
  const Header = () => {
    const {user,logOut} = useAuth()
+   const {getcart} = useNewcart()
+   console.log(getcart)
   return (
     <div className='header-menu'>
       <div className='headerbar'>
@@ -21,7 +24,7 @@ import { Link } from 'react-router-dom'
       <div className='user'>
       <h4>Welcome {user?.displayName}</h4>
        <button type="submit" onClick={logOut}>logOut</button>
-       <Link to="/cart"><button>cart</button></Link>
+       <Link to="/cart"><button>cart{getcart > 0 ? getcart : ""}</button></Link>
         </div>
         </div>
     </div>

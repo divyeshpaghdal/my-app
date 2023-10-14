@@ -34,7 +34,7 @@ return (
               <Route path="/pagination" element={<Pagination/>} />  
               <Route path="/product/:id" element={<Productinfo/>} />  
               <Route path="/cart" element={<Cart/>} />  
-              <Route path="/orderlist" element={<OrdergetList/>} />  
+              <Route path="/orderlist/:id" element={<OrdergetList/>} />  
              
         </Route>
       </Routes>

@@ -9,7 +9,6 @@ const CartdubProvider = ({ children }) => {
   const {user} = useAuth()
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
   const [ordergetdata, setordergetdata] = useState([])
-  const [getorderlist, setgetorderlist] = useState([])
   let gettotal
   let result
 
@@ -32,7 +31,7 @@ const CartdubProvider = ({ children }) => {
   };
   
   gettotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0) 
-  console.log(gettotal)
+  const getcart = cartItems.reduce((total, item) => total + item.quantity, 0) 
 
 
  const removeFromCart = (removeId) => {
@@ -48,11 +47,10 @@ const checkout = async () => {
     key_secret: "X12QhH8bscaraIO23CRFWn4p",
     amount: parseInt(gettotal * 100),
     currency: "INR",
-    order_receipt: 'order_rcptid_' + user?.photoURL,
+    order_receipt: 'order_rcptid_' + user?.displayName,
     name: "E-Bharat",
     description: "for testing purpose",
     handler: function (response) {
-
       console.log('Payment Successful')
       const paymentId = response.razorpay_payment_id
       const userinfodetails = {
@@ -60,7 +58,6 @@ const checkout = async () => {
         url:user?.photoURL,
         displayName:user?.displayName
       }
-  
       const orderInfo = {
         paymentId,
         cartItems,
@@ -78,9 +75,8 @@ const checkout = async () => {
 
       try {
         result = addDoc(collection(db, "orders"), orderInfo)
-        console.log(result,"80")
       } catch (error) {
-        console.log(error)
+        console.log(error)  
       }
     },
 
@@ -109,13 +105,6 @@ const getorderdetails = async () => {
   }
 }
 
-const submitlist = (ordermenu) => {
-  console.log(ordermenu)
-  setgetorderlist(ordermenu)
- }
- 
-
-
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -143,8 +132,7 @@ const submitlist = (ordermenu) => {
         gettotal,
         checkout,
         ordergetdata,
-        submitlist,
-        getorderlist
+        getcart
       }}
     >
       {children}
