@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useProduct } from '../ProductApi'
 import { categorytypedatabase } from '../database/Data'
+import Price from '../pages/Price'
 
 const Filter = () => {
     const { list, setlist, listcopy} = useProduct()
     console.log(list)
     const [category, setcategory] = useState()
     const [searchkey, setsearchkey] = useState()
-    const [range, setrange] = useState(0)
+    const [range, setrange] = useState()
    
     //category
     const filtercategory = listcopy?.filter((e) => {
@@ -25,26 +26,51 @@ const Filter = () => {
     // console.log(newcates)
     
     //range
+    const getrange = listcopy.map((e)=> {
+        return e.price
+    })
+   console.log()
+
     const rangerfilter = listcopy?.filter((e)=> {
         return Number(e.price) <= range
     })
-  
+    
 
     const filterchange = (e) => {
-        if (category) {
-            setlist(filtercategory)
-        }
-        if (searchkey) {
-            setlist(fitersearch)
-            setsearchkey("")
-            setcategory("")
-        }
-        if(range){
-            setlist(rangerfilter)
-            setsearchkey("")
-            setcategory("")
-        }
+        // if (category) {
+        //     setlist(filtercategory)
+        // }
+        // if (searchkey) {
+        //     setlist(fitersearch)
+        //     setsearchkey("")
+        //     setcategory("")
+        // }
+        // if(range){
+        //     setlist(rangerfilter)
+        //     setsearchkey("")
+        //     setcategory("")
+        // }
     }
+
+useEffect(() => {
+    if (category) {
+        setsearchkey("")
+        setrange("")
+        setlist(filtercategory)
+    }
+    if (searchkey) {
+        setcategory("")
+        setlist(fitersearch)
+        
+    }
+    if(range){
+        setsearchkey("")
+        setcategory("")
+        setlist(rangerfilter) 
+    }
+}, [range,category,searchkey])
+
+
 
     return (
         <div className='filerbar'>
@@ -65,8 +91,8 @@ const Filter = () => {
             </div>
             <div className='range'>
                 {range}
-             <input type='range' min="0" max="150000" value={range} onChange={(e) => setrange(e.target.value)}/>
-            </div>
+             <input type='range' min={Math.min(...getrange)} max={Math.max(...getrange)} value={range} onChange={(e) => setrange(e.target.value)}/>
+            </div>  
             <button onClick={filterchange}>Submit</button>
         </div>
     )
@@ -74,39 +100,3 @@ const Filter = () => {
 
 export default Filter
 
-
-
-//sort
-    // const sortfilter = () => {
-    //    const azsort = listcopy?.sort((a,b) => {
-    //     return a?.title.toLowerCase().localeCompare(b?.title.toLowerCase())
-    //    })
-    //    navigate('/category')
-    //    setlist(azsort)  
-    // }
-    // const sortfilterrev = () => {
-    //     navigate("/category")
-    //     const azsort = listcopy?.sort((a,b) => {
-    //      return b?.title.toLowerCase().localeCompare(a?.title.toLowerCase())
-    //     })
-    //     setlist(azsort)
-        
-    //  }
-   
-//     //maxvalue  
-//     const maxrangevalue = listcopy?.map((e)=> {
-//         return Number(e?.price)
-//     })
-//     console.log()
-//     console.log(Math.max(Array.from(maxrangevalue)));
-//    console.log(Math.max(maxrangevalue))
-
-    // const handlefilter = (e) => {
-    //   e.preventDefault()
-    //   setcategory(e.target.value) 
-    //   setlistcopy(filtercategory)
-    // }
-//   useEffect(() => {
-//     setlist(sort)
-//   }, [])
-  

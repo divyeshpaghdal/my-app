@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Price from './Price'
 
 
 const ProductCard = ({title,imgurl,des,price,category,discount,stock,id}) => {
@@ -11,7 +12,7 @@ const ProductCard = ({title,imgurl,des,price,category,discount,stock,id}) => {
                 </div>
                 <Link to={`/product/${id}`}><h5 className='title-sub'>{title?.slice(0, 50)}</h5></Link>
                 <p>{des?.slice(0, 100)}</p>
-                <h6 className='price'>Price : {price}</h6>
+                <h6 className='price'>Price : <Price price={price}/></h6>
                 <h6 className='cates'>Category : {category}</h6>
                 <h6 className='dis'>Discount : {discount}</h6>
                 <h6 className='stock'>Stock : {stock}</h6>

@@ -9,6 +9,7 @@ const LatestProduct = () => {
    const latestitem = listcopy?.filter((e)=> {
     return e.product === "latest"
    })
+   console.log(latestitem.slice(0,2))
 
     return (
         <>
@@ -19,7 +20,7 @@ const LatestProduct = () => {
                 <h3 className="title">Latest Product</h3>
                 <div className="row">
                     {
-                        latestitem?.map((e) => {
+                        latestitem.slice(0,8)?.map((e) => {
                             const {title,price,category,des,imgurl,discount,stock,id} = e
                             return (
                                 <ProductCard key={title} title={title} price={price} category={category} des={des} imgurl={imgurl} discount={discount} stock={stock} id={id}/>

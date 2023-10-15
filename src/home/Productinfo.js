@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { useProduct } from '../ProductApi'
 import { Link } from 'react-router-dom'
 import { useNewcart } from '../cart/DubcartApi'
+import Price from '../pages/Price'
 
 
 const Productinfo = () => {
@@ -84,11 +85,11 @@ const deccrement = () => {
                 </tr>
                 <tr>
                   <th>Regular Price</th>
-                  <td>{info?.price}</td>
+                  <td><Price price={info?.price}/></td>
                 </tr>
               </tbody>
             </table>
-            <h2>Pay : ₹ {info?.price - info?.discount}</h2>
+            <h2>Pay : ₹ <Price price={info?.price - info?.discount} /></h2>
             { totalstock !== 0 && info?.product !== "upcomming" ?  
               <div className='count'>
               <button onClick={()=>deccrement()}>-</button> 

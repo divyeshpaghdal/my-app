@@ -14,8 +14,7 @@ const CartdubProvider = ({ children }) => {
 
   const addToCart = (item) => {
     console.log(item)
-    const isItemInCart = cartItems?.find((cartItem) => cartItem.id === item.id);
-
+    const isItemInCart = cartItems?.find((cartItem) => cartItem.id === item.id);        
     if (isItemInCart) {
       console.log(isItemInCart)
       setCartItems(cartItems?.map((cartItem) =>
