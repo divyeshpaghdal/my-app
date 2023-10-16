@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useProduct } from '../ProductApi'
 import { categorytypedatabase } from '../database/Data'
-import Price from '../pages/Price'
+import { sortdata } from '../database/Data'
 
 const Filter = () => {
     const { list, setlist, listcopy} = useProduct()
-    console.log(list)
     const [category, setcategory] = useState()
     const [searchkey, setsearchkey] = useState()
     const [range, setrange] = useState()
+    const [sort, setsort] = useState()
    
     //category
     const filtercategory = listcopy?.filter((e) => {
@@ -35,22 +35,11 @@ const Filter = () => {
         return Number(e.price) <= range
     })
     
-
-    const filterchange = (e) => {
-        // if (category) {
-        //     setlist(filtercategory)
-        // }
-        // if (searchkey) {
-        //     setlist(fitersearch)
-        //     setsearchkey("")
-        //     setcategory("")
-        // }
-        // if(range){
-        //     setlist(rangerfilter)
-        //     setsearchkey("")
-        //     setcategory("")
-        // }
-    }
+  //sort
+       
+    
+    
+ 
 
 useEffect(() => {
     if (category) {
@@ -68,7 +57,33 @@ useEffect(() => {
         setcategory("")
         setlist(rangerfilter) 
     }
-}, [range,category,searchkey])
+    if(sort) {
+    }
+    if(sort === "ATOZ") {
+        const sortfilter = [...list].sort((a,b)=> {
+         return a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+      })
+      setlist(sortfilter) 
+    } 
+    if(sort === "ZTOA") {
+        const sortfilter = [...list].sort((a,b)=> {
+         return b.title.toLowerCase().localeCompare(a.title.toLowerCase())
+      })
+      setlist(sortfilter) 
+    } 
+    if(sort === "Lowest") {
+        const sortfilter = [...list].sort((a,b)=> {
+         return a.price - b.price
+      })
+      setlist(sortfilter) 
+    } 
+    if(sort === "Highest") {
+        const sortfilter = [...list].sort((a,b)=> {
+         return b.price - a.price
+      })
+      setlist(sortfilter) 
+    }  
+}, [range,category,searchkey,sort])
 
 
 
@@ -93,7 +108,16 @@ useEffect(() => {
                 {range}
              <input type='range' min={Math.min(...getrange)} max={Math.max(...getrange)} value={range} onChange={(e) => setrange(e.target.value)}/>
             </div>  
-            <button onClick={filterchange}>Submit</button>
+           
+            <select value={sort} onChange={(e) => setsort(e.target.value)}>
+                    {
+                        sortdata?.map((sorte) => {
+                            return (
+                                <option key={sorte} value={sorte}>{sorte}</option>
+                            )
+                        })
+                    }
+                </select>
         </div>
     )
 }

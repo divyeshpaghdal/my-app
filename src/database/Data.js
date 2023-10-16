@@ -2,6 +2,8 @@ export const categorytypedatabase = ["Select your product","shirt","kurta","kraf
 
 export const producttypedatabase = ["popular","latest","upcomming","shortest","other"]
 
+export const sortdata = ["Select your sort","ATOZ","ZTOA","Lowest","Highest"]
+
 export const allproduct = [
     {
         "imgurl": "https://m.media-amazon.com/images/I/71ad8PSy5kL._UX569_.jpg",
