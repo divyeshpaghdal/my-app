@@ -99,7 +99,7 @@ const deccrement = () => {
           }
            { totalstock !== 0 && info?.product !== "upcomming" ?
              <Link to="/cart"><button onClick={() => 
-              addToCart({title:info?.title,price:Number(info?.price),img:info?.imgurl,id:id,quantity:count,stock:Number(info?.stock)})}>
+              addToCart({title:info?.title,price:Number(info?.price - info?.discount),img:info?.imgurl,id:id,quantity:count,stock:Number(info?.stock)})}>
                  Add to Cart</button></Link> : ""
            }
           </div>

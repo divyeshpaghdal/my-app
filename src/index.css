@@ -610,3 +610,12 @@ td {
   font-weight: 700;
   margin-bottom: 50px;
 }
+/* --- */
+.breadcump ul{
+  display: flex;
+  gap: 15px;
+  margin: 15px 0;
+}
+.brd-active {
+  color:red;
+}

@@ -3,16 +3,15 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNewcart } from './DubcartApi'
 import Price from '../pages/Price'
+import Shipping from './Shipping'
+import Payment from './Payment'
 
 
 
 const Cart = () => {
-  const {cartItems,removeFromCart,gettotal,setCartItems,checkout} = useNewcart()
-  const [showdis, setshowdis] = useState(false)
+  const {cartItems,removeFromCart,setCartItems,checkout,bred,setbred,} = useNewcart()
  
-  
-
-
+ 
  const setinc = (incid) => {
   const {idd,stocckk} = incid
   console.log(incid)
@@ -51,36 +50,7 @@ const Cart = () => {
  }
 } 
 
-// ---discount-range---
-let discount
-let lengthrange 
 
-if(gettotal > 3000) {
-  discount = "123455432112345" 
-  lengthrange = 3
-} 
-if (gettotal > 8000) {
-  discount = "567899876556789" 
-  lengthrange = 3
-}
-if (gettotal > 50000) {
-  discount = "123451234512345" 
-  lengthrange = 4
-}
-
-let getvalue = ""
-for (let index = 0; index < lengthrange; index++) {
-let vallu = Math.floor(Math.random() * discount.length);
-getvalue += discount.charAt(vallu)  
-}
-
-const handledis = () => {
- if(showdis === true) {
-  setshowdis(false)
- }else {
-  setshowdis(true)
- }
-}
 
 const minprice = cartItems?.map((e)=> {
   return e?.price
@@ -91,7 +61,18 @@ console.log(Math.max(...minprice))
   return (
     <div className='container padding-80 px-0 cart-page'>
       <div className="row">
-        <div className='col-md-9'>
+        <div className='col-12'>
+          <div className='breadcump'>
+            <ul>
+              <li className={bred === "cartpage" ? "brd-active" : ""}>Cart page</li>
+              <li className={bred === "shippingpage" ? "brd-active" : ""}>Shipping page</li>
+              <li className={bred === "paymentpage" ? "brd-active" : ""}>payment page</li>
+            </ul>
+          </div>
+        </div>
+        {
+          bred === "cartpage" && 
+          <div className='col-md-12'>
         {cartItems.length > 0 ? 
         <div>
           <table>
@@ -130,13 +111,23 @@ console.log(Math.max(...minprice))
           </table> 
           </div>
           : "pls add your item" }
+          { cartItems.length > 0 ? <button onClick={() => setbred("shippingpage") }>Shipping page</button> : <button>add Product</button>}
         </div>
-         <div className='col-md-3'>
-         <h2>Total : {<Price price = {gettotal}/> }</h2>
-         <h5>Special Discount : {showdis ? getvalue : ""} </h5>
-         <button onClick={handledis}>show discount</button>
-         {/* {cartItems.length > 0 ? <button onClick={checkout}>checkout</button> : ""}  */}
-         </div>
+        }
+      { bred === "shippingpage" && 
+        <div className='col-12'>
+          <Shipping/>
+          <button onClick={() => setbred("cartpage") }>cart page</button>
+        </div>
+      }
+      { bred === "paymentpage" && 
+        <div className='col-12'>
+          <Payment/>
+          <button onClick={() => setbred("shippingpage") }>Shipping page</button>
+        </div>
+      }
+
+        
       </div>
 
     </div>
@@ -144,3 +135,7 @@ console.log(Math.max(...minprice))
 }
 
 export default Cart
+
+
+
+

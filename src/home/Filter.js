@@ -11,11 +11,11 @@ const Filter = () => {
     const [sort, setsort] = useState()
    
     //category
-    const filtercategory = listcopy?.filter((e) => {
+    const filtercategory = [...listcopy]?.filter((e) => {
         return e.category === category
     })
     //search
-    const fitersearch = listcopy?.filter((e) => {
+    const fitersearch = [...listcopy]?.filter((e) => {
         return e.title.toLowerCase().includes(searchkey?.toLowerCase())
     })
     //categorykeys
@@ -26,12 +26,12 @@ const Filter = () => {
     // console.log(newcates)
     
     //range
-    const getrange = listcopy.map((e)=> {
+    const getrange = [...listcopy].map((e)=> {
         return e.price
     })
    console.log()
 
-    const rangerfilter = listcopy?.filter((e)=> {
+    const rangerfilter = [...listcopy]?.filter((e)=> {
         return Number(e.price) <= range
     })
     
@@ -106,7 +106,7 @@ useEffect(() => {
             </div>
             <div className='range'>
                 {range}
-             <input type='range' min={Math.min(...getrange)} max={Math.max(...getrange)} value={range} onChange={(e) => setrange(e.target.value)}/>
+             <input type='range' min="0" max={Math.max(...getrange)} value={range} onChange={(e) => setrange(e.target.value)}/>
             </div>  
            
             <select value={sort} onChange={(e) => setsort(e.target.value)}>

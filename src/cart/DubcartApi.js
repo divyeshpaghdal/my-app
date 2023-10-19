@@ -9,6 +9,16 @@ const CartdubProvider = ({ children }) => {
   const {user} = useAuth()
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
   const [ordergetdata, setordergetdata] = useState([])
+  const [bred, setbred] = useState("cartpage")
+  const [showdis, setshowdis] = useState(false)
+  const [shippingInfo, setshippingInfo] = useState({
+    email:"",
+    userrname:"",
+    address:"",
+    city:"",
+    phonenumber:"",
+
+  })
   let gettotal
   let result
 
@@ -52,16 +62,12 @@ const checkout = async () => {
     handler: function (response) {
       console.log('Payment Successful')
       const paymentId = response.razorpay_payment_id
-      const userinfodetails = {
-        email:user?.email,
-        url:user?.photoURL,
-        displayName:user?.displayName
-      }
+     
       const orderInfo = {
         paymentId,
         cartItems,
         gettotal,
-        userinfodetails,
+        shippingInfo,
         date: new Date().toLocaleString(
           "en-US",
           {
@@ -104,6 +110,38 @@ const getorderdetails = async () => {
   }
 }
 
+// ---discount generate---
+// ---discount-range---
+let discount
+let lengthrange 
+
+if(gettotal > 3000) {
+  discount = "123455432112345" 
+  lengthrange = 3
+} 
+if (gettotal > 8000) {
+  discount = "567899876556789" 
+  lengthrange = 3
+}
+if (gettotal > 50000) {
+  discount = "123451234512345" 
+  lengthrange = 4
+}
+
+
+let getvalue = ""
+for (let index = 0; index < lengthrange; index++) {
+let vallu = Math.floor(Math.random() * discount.length);
+getvalue += discount.charAt(vallu)  
+}
+
+const handledis = () => {
+  if(showdis === true) {
+   setshowdis(false)
+  }else {
+   setshowdis(true)
+  }
+ }
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -131,7 +169,10 @@ const getorderdetails = async () => {
         gettotal,
         checkout,
         ordergetdata,
-        getcart
+        getcart,
+        bred,setbred,
+        shippingInfo,setshippingInfo,
+        handledis,showdis, setshowdis,getvalue
       }}
     >
       {children}
