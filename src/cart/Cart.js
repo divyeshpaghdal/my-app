@@ -55,7 +55,7 @@ const Cart = () => {
 const minprice = cartItems?.map((e)=> {
   return e?.price
 })
-console.log(Math.max(...minprice))
+
 
 
   return (
@@ -123,7 +123,7 @@ console.log(Math.max(...minprice))
       { bred === "paymentpage" && 
         <div className='col-12'>
           <Payment/>
-          <button onClick={() => setbred("shippingpage") }>Shipping page</button>
+          {/* <button onClick={() => setbred("shippingpage") }>Shipping page</button> */}
         </div>
       }
 

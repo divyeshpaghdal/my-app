@@ -9,15 +9,19 @@ const CartdubProvider = ({ children }) => {
   const {user} = useAuth()
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
   const [ordergetdata, setordergetdata] = useState([])
-  const [bred, setbred] = useState("cartpage")
+  const [bred, setbred] = useState("paymentpage")
   const [showdis, setshowdis] = useState(false)
   const [shippingInfo, setshippingInfo] = useState({
     email:"",
     userrname:"",
-    address:"",
     city:"",
     phonenumber:"",
-
+  })
+  const [paymentInfo, setpaymentInfo] = useState({
+    cardnumber:"",
+    cardname:"",
+    exp:"",
+    cvv:"",
   })
   let gettotal
   let result
@@ -50,50 +54,13 @@ const CartdubProvider = ({ children }) => {
  }
  
 // ----payment----
-const checkout = async () => {
-  var options = {
-    key: "rzp_test_BtiGp81nTK7xFW",
-    key_secret: "X12QhH8bscaraIO23CRFWn4p",
-    amount: parseInt(gettotal * 100),
-    currency: "INR",
-    order_receipt: 'order_rcptid_' + user?.displayName,
-    name: "E-Bharat",
-    description: "for testing purpose",
-    handler: function (response) {
-      console.log('Payment Successful')
-      const paymentId = response.razorpay_payment_id
-     
-      const orderInfo = {
-        paymentId,
-        cartItems,
-        gettotal,
-        shippingInfo,
-        date: new Date().toLocaleString(
-          "en-US",
-          {
-            month: "short",
-            day: "2-digit",
-            year: "numeric",
-          }
-        )
-      }
 
-      try {
-        result = addDoc(collection(db, "orders"), orderInfo)
-      } catch (error) {
-        console.log(error)  
-      }
-    },
 
-    theme: {
-      color: "#3399cc"
-    }
-  };
-  var pay = new window.Razorpay(options);
-  pay.open();
-  console.log(pay)
-  getorderdetails()
-}
+
+
+
+
+
 
 // ---ordergetdata---
 const getorderdetails = async () => {
@@ -167,12 +134,13 @@ const handledis = () => {
         setCartItems,
         removeFromCart,
         gettotal,
-        checkout,
+        //checkout,
         ordergetdata,
         getcart,
         bred,setbred,
         shippingInfo,setshippingInfo,
-        handledis,showdis, setshowdis,getvalue
+        handledis,showdis, setshowdis,getvalue,
+        paymentInfo, setpaymentInfo
       }}
     >
       {children}
@@ -185,3 +153,52 @@ const useNewcart = () => {
 }
 
 export {CartdubProvider,useNewcart}
+
+
+
+
+
+// const checkout = async () => {
+//   var options = {
+//     key: "rzp_test_BtiGp81nTK7xFW",
+//     key_secret: "X12QhH8bscaraIO23CRFWn4p",
+//     amount: parseInt(gettotal * 100),
+//     currency: "INR",
+//     order_receipt: 'order_rcptid_' + user?.displayName,
+//     name: "E-Bharat",
+//     description: "for testing purpose",
+//     handler: function (response) {
+//       console.log('Payment Successful')
+//       const paymentId = response.razorpay_payment_id
+     
+//       const orderInfo = {
+//         paymentId,
+//         cartItems,
+//         gettotal,
+//         shippingInfo,
+//         date: new Date().toLocaleString(
+//           "en-US",
+//           {
+//             month: "short",
+//             day: "2-digit",
+//             year: "numeric",
+//           }
+//         )
+//       }
+
+//       try {
+//         result = addDoc(collection(db, "orders"), orderInfo)
+//       } catch (error) {
+//         console.log(error)  
+//       }
+//     },
+
+//     theme: {
+//       color: "#3399cc"
+//     }
+//   };
+//   var pay = new window.Razorpay(options);
+//   pay.open();
+//   console.log(pay)
+//   getorderdetails()
+// }
