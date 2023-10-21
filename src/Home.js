@@ -13,7 +13,7 @@ import Abouts from './pages/Abouts';
   const Home = () => {
   
   return (
-    <div className='homepage'>
+    <div className='homepage spacing-top'>
       <Banner/>
       <LatestProduct/>
       <Abouts/>

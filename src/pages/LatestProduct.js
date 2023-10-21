@@ -9,8 +9,6 @@ const LatestProduct = () => {
    const latestitem = listcopy?.filter((e)=> {
     return e.product === "latest"
    })
-   console.log(latestitem.slice(0,2))
-
     return (
         <>
        

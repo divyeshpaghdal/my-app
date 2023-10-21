@@ -1,6 +1,8 @@
 import React from 'react'
 import { useAuth } from '../AuthcontextApi'
 import { useNavigate } from "react-router-dom"
+import logo from '../img/logo.png'
+
 
 
 const Signin = () => {
@@ -12,8 +14,13 @@ const Signin = () => {
           setpassword("")
     }
     return (
+        <div className='authscreen'>
         <div className='container'>
             <form>
+            <div className='logo-set'>
+                <img src={logo}/>
+                </div>
+                <h1>Sign Page</h1>
             <div className="mb-3">
                     <label className="form-label">Name</label>
                     <input type="text" value={updateName}  onChange={(e)=> setupdateName(e.target.value)} className="form-control"/>
@@ -30,9 +37,10 @@ const Signin = () => {
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                     <input type="password" value={password} onChange={(e)=> setpassword(e.target.value)} className="form-control"/>
                 </div>
-                <button type="submit" onClick={submitSignIn} className="btn btn-primary">Sign in</button>
-                <button type="submit" onClick={dummylogin} className="btn btn-primary">Login</button>
+                <p>You have an account ? <span onClick={dummylogin}>Login</span></p>
+                <button type="submit" onClick={submitSignIn} className="btnn">Sign in</button>
             </form>
+        </div>
         </div>
     )
 }

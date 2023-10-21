@@ -9,7 +9,7 @@ const CartdubProvider = ({ children }) => {
   const {user} = useAuth()
   const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [])
   const [ordergetdata, setordergetdata] = useState([])
-  const [bred, setbred] = useState("paymentpage")
+  const [bred, setbred] = useState("cartpage")
   const [showdis, setshowdis] = useState(false)
   const [shippingInfo, setshippingInfo] = useState({
     email:"",

@@ -10,6 +10,7 @@ import {BrowserRouter } from 'react-router-dom';
 import { ProductProvider } from './ProductApi';
 import { CartProvider } from './cart/CartApi';
 import { CartdubProvider } from './cart/DubcartApi';
+import Display from './Display';
 
 
 
@@ -21,7 +22,7 @@ root.render(
     <AuthProvider>
       <ProductProvider>
           <CartdubProvider>
-           <App />
+           <Display/>
            </CartdubProvider>
        </ProductProvider>
     </AuthProvider>

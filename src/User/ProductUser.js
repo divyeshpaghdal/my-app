@@ -7,12 +7,6 @@ import { Link } from 'react-router-dom';
 const ProductUser = () => {
   const { list, products, setproducts, submitproduct, deleteproduct, updateproduct, updatebtnproduct, clear, productshow, setproductshow, listcopy} = useProduct()
     console.log( list)
-    // let total = 0
-    // list.map((e)=> {
-    //     return total = total + parseInt(e.price)
-    // })
-    // const sum = list.reduce((accumulator, currentValue) => accumulator + Number(currentValue.price),0);
-    // console.log(sum)
 
     const show = () => {
         if (productshow === false) {
@@ -38,7 +32,6 @@ const ProductUser = () => {
                         </div>
                         <div className="mb-3">
                             <label className="form-label">Describation</label>
-                            {/* <input type="text" value={products?.des} onChange={(e) => setproducts({ ...products, des: e.target.value })} /> */}
                             <textarea placeholder='Enter your Decbirition' type="text" value={products?.des} onChange={(e) => setproducts({ ...products, des: e.target.value })}>
                             </textarea>
                         </div>
@@ -112,8 +105,8 @@ const ProductUser = () => {
                                <td>{e?.category}</td>
                                <td>{e?.discount}</td>
                                <td>{e?.stock}</td>
-                               <td><button onClick={() => deleteproduct(e)}>-</button></td>
-                               <td><button onClick={() => updateproduct(e)}>+</button></td>
+                               <td><button onClick={() => deleteproduct(e)}><i class="fas fa-trash-alt"></i></button></td>
+                               <td><button onClick={() => updateproduct(e)}><i class="fas fa-edit"></i></button></td>
                               </tr>
                             )
                         })

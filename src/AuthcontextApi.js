@@ -4,6 +4,7 @@ import { auth, db } from './firebase';
 import { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Timestamp, addDoc, collection } from 'firebase/firestore';
+import { toast } from 'react-toastify'
 
 const authcontext = createContext()
 
@@ -26,8 +27,6 @@ const AuthProvider = ({ children }) => {
                     photoURL:photoURL
 
                 })
-                console.log("SignIn", data)
-
                 let userdata = {
                     email: data?.user?.email,
                     uid: data?.user?.uid,
@@ -46,24 +45,20 @@ const AuthProvider = ({ children }) => {
             navigate("/")
         }
         else {
-            alert("fill form")
+            toast("Fill Sign Form")
         }
     }
 
     //login
     const submitLogin = async (e) => {
-        console.log("loading on")
         e.preventDefault()
         try {
             const data = await signInWithEmailAndPassword(auth, email, password, updateName)
-            console.log("LogIN", data)
             navigate("/home")
-            console.log("loading off")
         } catch (error) {
             console.log(error)
-            window.location.reload(false);
             navigate("/")
-            alert("pls valid email")
+            window.location.reload(false);
         }
     }
 

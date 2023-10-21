@@ -2,7 +2,7 @@ import React from 'react'
 
 const AboutDetails = () => {
     return (
-        <div className='container padding-80'>
+        <div className='container padding-80 spacing-top'>
             <div className='row about-details'>
                 <div className='col-md-12 img'>
                 <h2 className='title'>About Us</h2>

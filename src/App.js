@@ -1,9 +1,6 @@
 import React from 'react'
 import Home from './Home';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from './auth/Login';
-import Signin from './auth/Signin';
-import Abouts from './pages/Abouts';
+import { Routes, Route } from "react-router-dom";
 import Category from './pages/Category';
 import Contact from './pages/Contact';
 import Upcoming from './pages/Upcoming';
@@ -16,15 +13,22 @@ import AboutDetails from './pages/AboutDetails';
 import Cart from './cart/Cart';
 import Pagination from './Pagination';
 import OrdergetList from './User/OrdergetList';
-
+import UserProfille from './User/UserProfille';
+import Search from './pages/Search';
+import { useProduct } from './ProductApi';
+import ErrorPage from './home/ErrorPage';
+ 
 const App = () => {
+  const {searchfilter} = useProduct()
+
 return (
     <div>
       <Header/>
+      {
+        searchfilter ? <Search/> : ""
+      }
       <Routes>
       <Route>
-              <Route path="/" element={ <Login/>}/> 
-              <Route path="/signin" element={<Signin/>}/> 
               <Route path="/home" element={<Home/>} />  
               <Route path="/aboutdetails" element={<AboutDetails/>} />      
               <Route path="/category" element={<Category/>} />    
@@ -34,8 +38,9 @@ return (
               <Route path="/pagination" element={<Pagination/>} />  
               <Route path="/product/:id" element={<Productinfo/>} />  
               <Route path="/cart" element={<Cart/>} />  
-              <Route path="/orderlist/:id" element={<OrdergetList/>} />  
-             
+              <Route path="/orderlist/:id" element={<OrdergetList/>} />
+              <Route path="/userprofile" element={<UserProfille/>} />    
+              <Route path="*" element={<ErrorPage/>} />                  
         </Route>
       </Routes>
       <ToastContainer

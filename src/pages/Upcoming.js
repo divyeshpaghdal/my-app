@@ -12,7 +12,7 @@ const Upcoming = () => {
 
   return (
       <>
-          <div className='upcomming container padding-80 item'>
+          <div className='upcomming container padding-80 item spacing-top   '>
               <h3 className="title">Upcomming Product</h3>
               <div className="row">
                   {

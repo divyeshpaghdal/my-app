@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { useAuth } from './AuthcontextApi';
-import { collection, getDocs, addDoc,limit, Timestamp, query, orderBy, onSnapshot, setDoc, doc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, Timestamp, query, orderBy, onSnapshot, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../src/firebase"
 
 const productcontext = createContext()
@@ -11,20 +11,20 @@ const ProductProvider = ({ children }) => {
   const [edit, setedit] = useState()
   const [clear, setclear] = useState(true)
   const [productshow, setproductshow] = useState(false)
- const [totaluser, settotaluser] = useState()
- const [isloading, setisloading] = useState(false)
-
+  const [totaluser, settotaluser] = useState()
+  const [isloading, setisloading] = useState(false)
+  const [searchfilter, setsearchfilter] = useState(false)
 
   const [products, setproducts] = useState({
     title: null,
     des: null,
     price: null,
-    imgurl:null,
-    category:null,
-    discount:null,
-    stock:null,
-    notuser:null,
-    product:null,
+    imgurl: null,
+    category: null,
+    discount: null,
+    stock: null,
+    notuser: null,
+    product: null,
     time: Timestamp.now()
   })
   //setproduct
@@ -56,12 +56,12 @@ const ProductProvider = ({ children }) => {
       const getdata = onSnapshot(q, (queryshot) => {
         let productArray = []
         queryshot.forEach((doc) => {
-        productArray.push({ ...doc.data(), id: doc.id })
+          productArray.push({ ...doc.data(), id: doc.id })
         })
         setisloading(false)
         setlist(productArray)
-        setlistcopy(productArray) 
-        
+        setlistcopy(productArray)
+
       })
       return () => getdata;
     } catch (error) {
@@ -73,7 +73,7 @@ const ProductProvider = ({ children }) => {
   const updateproduct = async (item) => {
     setisloading(true)
     try {
-      const update = await setDoc(doc(db, 'products',item.id),item)
+      const update = await setDoc(doc(db, 'products', item.id), item)
       setproducts(item)
       window.scrollTo(0, 0)
       setproductshow(true)
@@ -92,7 +92,7 @@ const ProductProvider = ({ children }) => {
     deleteproduct(edit)
     try {
       const productRef = collection(db, 'products')
-      const docRef = await addDoc(productRef,products);
+      const docRef = await addDoc(productRef, products);
       getproduct()
       setclear(true)
       setproductshow(false)
@@ -114,31 +114,31 @@ const ProductProvider = ({ children }) => {
     try {
       const setdelete = await deleteDoc(doc(db, 'products', item.id))
       getproduct()
-      setisloading(false) 
+      setisloading(false)
     } catch (error) {
       console.log(error)
     }
   }
 
-//getuserdata
+  //getuserdata
 
-const getusedata = async () => {
-  const userRef = collection(db,"user")
-  const uservalue = await getDocs(userRef)
-  let userbox = []
-  uservalue.forEach((doc) => {
-    userbox.push({...doc.data()})
-  })
- settotaluser(userbox)
+  const getusedata = async () => {
+    const userRef = collection(db, "user")
+    const uservalue = await getDocs(userRef)
+    let userbox = []
+    uservalue.forEach((doc) => {
+      userbox.push({ ...doc.data() })
+    })
+    settotaluser(userbox)
   };
-  
+
   useEffect(() => {
     getproduct()
     getusedata()
   }, [])
 
   return (
-    <productcontext.Provider value={{ products, setproducts, list, setlist, submitproduct, deleteproduct, updateproduct, edit, updatebtnproduct ,clear, setclear, listcopy, setlistcopy, productshow, setproductshow, totaluser, isloading}}>
+    <productcontext.Provider value={{ products, setproducts, list, setlist, submitproduct, deleteproduct, updateproduct, edit, updatebtnproduct, clear, setclear, listcopy, setlistcopy, productshow, setproductshow, totaluser, isloading,searchfilter, setsearchfilter}}>
       {children}
     </productcontext.Provider>
   )

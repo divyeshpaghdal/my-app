@@ -12,7 +12,7 @@ const Category = () => {
   console.log(list,"40")
   return (
     <>
-    <div className='category-page container padding-80'>
+    <div className='category-page container padding-80 spacing-top'>
      <div className="row">
         <div className='product-leangth'>
           <h4>Total Product : {list?.length}</h4>

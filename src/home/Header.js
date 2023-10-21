@@ -2,29 +2,38 @@ import React from 'react'
 import { useAuth } from '../AuthcontextApi'
 import { Link } from 'react-router-dom'
 import { useNewcart } from '../cart/DubcartApi'
-
+import { useProduct } from '../ProductApi'
+import logo from '../img/logo.png'
 
  const Header = () => {
-   const {user,logOut} = useAuth()
+   const {user} = useAuth()
    const {getcart} = useNewcart()
-   console.log(getcart)
+   const {setsearchfilter} = useProduct()
+
+   const changefilterquery = () => {
+    setsearchfilter(true)
+   }
+
   return (
     <div className='header-menu'>
       <div className='headerbar'>
-      <Link to="/home"><h2>Dp STORE</h2></Link>
+      <Link to="/home">
+        <div className='logo-home'>
+          <img src={logo} />
+        </div>
+      </Link>
         <ul className='menu'>
             <Link to="/home"><li>Home</li></Link>
             <Link to="/aboutdetails"><li>About</li></Link>
             <Link to="/category"><li>Category</li></Link>
             <Link to="/upcoming"><li>Upcoming</li></Link>
             <Link to="/contact"><li>Contact</li></Link>
-            <Link to="/admin"><li>User</li></Link>
-            <Link to="/pagination"><li>all product</li></Link>
+            {/* <Link to="/admin"><li>Admin Panel</li></Link> */}
         </ul>
       <div className='user'>
-      <h4>Welcome {user?.displayName}</h4>
-       <button type="submit" onClick={logOut}>logOut</button>
-       <Link to="/cart"><button>cart{getcart > 0 ? getcart : ""}</button></Link>
+     <span onClick={changefilterquery}><i class="fas fa-search"></i></span>
+      <Link to="/userprofile"><h4><i class="fas fa-user"></i></h4></Link>
+      <Link to="/cart"><p className='cartbtn'><i class="fas fa-cart-plus"></i>{getcart > 0 ? <span>{getcart}</span> : ""}</p></Link>
         </div>
         </div>
     </div>
@@ -37,3 +46,5 @@ export default Header
   // {user?.email === String(process.env.REACT_APP_USER_ID) ? 
   //   <Link to="/product"><li>Admin Panel</li></Link> : ""  
   // }
+
+  // <Link to="/userprofile"><h4><i class="fas fa-user"></i>Welcome {user?.displayName}</h4></Link>

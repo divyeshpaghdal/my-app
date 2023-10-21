@@ -59,33 +59,23 @@ const minprice = cartItems?.map((e)=> {
 
 
   return (
-    <div className='container padding-80 px-0 cart-page'>
-      <div className="row">
+    <div className='container padding-80 px-0 cart-page spacing-top'>
+      <div className="row cart-list">
         <div className='col-12'>
           <div className='breadcump'>
             <ul>
-              <li className={bred === "cartpage" ? "brd-active" : ""}>Cart page</li>
-              <li className={bred === "shippingpage" ? "brd-active" : ""}>Shipping page</li>
-              <li className={bred === "paymentpage" ? "brd-active" : ""}>payment page</li>
+              <li className={bred === "cartpage" ? "brd-active" : ""}>Cart</li>
+              <li className={bred === "shippingpage" ? "brd-active" : ""}>Shipping</li>
+              <li className={bred === "paymentpage" ? "brd-active" : ""}>payment</li>
             </ul>
           </div>
         </div>
         {
           bred === "cartpage" && 
-          <div className='col-md-12'>
+         <div className='col-12'>
         {cartItems.length > 0 ? 
         <div>
           <table>
-            <thead>
-              <tr>
-                <th className='number w-5'>No.</th>
-                <th className='photos w-20'>Photo</th>
-                <th className='w-40'>Title</th>
-                <th className='w-25'>count</th>
-                <th className='price w-15'>Price</th>
-                <th className='price w-15'></th>
-              </tr>
-            </thead>
             <tbody>
               {
                 cartItems?.map((e, index) => {
@@ -96,13 +86,13 @@ const minprice = cartItems?.map((e)=> {
                       <td><Link to={`/product/${e?.id}`}><h5 className="card-title">{e?.title?.slice(0, 30)}</h5></Link></td>
                       <td>
                         <div className='count'>
-                        <button onClick={()=>setdec({idd:e?.id,stocckk:e?.stock})}>-</button>
+                        <button onClick={()=>setdec({idd:e?.id,stocckk:e?.stock})}><i class="fas fa-minus"></i></button>
                           {e?.quantity}
-                          <button onClick={()=>setinc({idd:e?.id,stocckk:e?.stock})}>+</button>
+                          <button onClick={()=>setinc({idd:e?.id,stocckk:e?.stock})}><i class="far fa-plus"></i></button>
                         </div>
                       </td>
                       <td><Price price= {e?.price*e?.quantity}/></td>
-                     <td onClick={() => removeFromCart(e?.id)}>remove</td>
+                     <td onClick={() => removeFromCart(e?.id)}><i class="fas fa-trash"></i></td>
                     </tr>
                   )
                 })
@@ -110,20 +100,23 @@ const minprice = cartItems?.map((e)=> {
             </tbody>
           </table> 
           </div>
-          : "pls add your item" }
-          { cartItems.length > 0 ? <button onClick={() => setbred("shippingpage") }>Shipping page</button> : <button>add Product</button>}
+          : <div className='cart-emt'>Cart Empty</div> }
+          
+          { cartItems.length > 0 ? 
+           <div className='btn-rightt'><button onClick={() => setbred("shippingpage") }>Shipping</button></div> : <div className='btn-alignn'><Link to="/category"><button>Add Product</button></Link></div> 
+          }
+
         </div>
         }
       { bred === "shippingpage" && 
-        <div className='col-12'>
+        <div className='col-12 shipping-pages'>
           <Shipping/>
-          <button onClick={() => setbred("cartpage") }>cart page</button>
         </div>
       }
       { bred === "paymentpage" && 
         <div className='col-12'>
           <Payment/>
-          {/* <button onClick={() => setbred("shippingpage") }>Shipping page</button> */}
+          <button onClick={() => setbred("shippingpage") }>Shipping</button>
         </div>
       }
 

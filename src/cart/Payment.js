@@ -97,18 +97,8 @@ const paymentdone = () => {
   return (
     <>
       <div className='col-md-12'>
-        {cartItems.length > 0 ?
           <div>
             <table>
-              <thead>
-                <tr>
-                  <th className='number w-5'>No.</th>
-                  <th className='photos w-20'>Photo</th>
-                  <th className='w-40'>Title</th>
-                  <th className='w-25'>Quantity</th>
-                  <th className='price w-15'>Price</th>
-                </tr>
-              </thead>
               <tbody>
                 {
                   cartItems?.map((e, index) => {
@@ -130,9 +120,9 @@ const paymentdone = () => {
               </tbody>
             </table>
           </div>
-          : "pls add your item"}
-        <div>
-          <h1>Your shipping details</h1>
+
+        <div className='pay-shipping'>
+          <h1>shipping details</h1>
           <h3>Email : {email}</h3>
           <h3>userrname : {userrname}</h3>
           <h3>city : {city}</h3>

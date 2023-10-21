@@ -13,7 +13,8 @@ const Shipping = () => {
     const [errornumbermsg, seterrornumbermsg] = useState()
     const { shippingInfo, gettotal, setshippingInfo, bred, setbred,handledis,showdis,getvalue} = useNewcart()
     const {email,userrname,city,phonenumber} = shippingInfo
-    
+    const tax = 23;
+    const shippingcharge = 40
     const setemail = (e) => {
             if(email === ""){
                 setemailerror(true)
@@ -74,45 +75,51 @@ const Shipping = () => {
     return  (
         <div className='row'>
             <div className='col-md-8'>
-                <form>
-                           
-                        <div className="mb-3 col-6" id='#email'>
+                <form className='shipping-form'>
+         
+                        <div className="mb-3 col-12" id='#email'>
                             <label className="form-label">Email</label>
                             <input className={!emailerror ? "green form-control" : "red form-control"}   type="email" value={shippingInfo.email} onChange={(e) => setemail(e)}/>
                             {emailerror && <span>{erroremailmsg}</span>}
                         </div>
 
 
-                    <div className="mb-3 col-6" id='#name'>
+                    <div className="mb-3 col-12" id='#name'>
                         <label className="form-label">Name</label>
                         <input className={!usernameerror ? "green form-control" : "red form-control"} type="text" value={shippingInfo.userrname} onChange={(e) => setyourname(e)}/>
                         {usernameerror && <span>{errornamemsg}</span>}
                     </div>
 
 
-                    <div className="mb-3 col-6"  id='#city'>
+                    <div className="mb-3 col-12"  id='#city'>
                         <label className="form-label">City</label>
                         <input className={!cityerror ? "green form-control" : "red form-control"} type="text" value={shippingInfo.city} onChange={(e) => setyourcity(e)}/>
                         {cityerror && <span>{errorcitymsg}</span>}
                     </div>
                 
-                    <div className="mb-3 col-6" id='#email'>
+                    <div className="col-12" id='#email'>
                             <label className="form-label">Phone Number</label>
                             <input className={!numbererror ? "green form-control" : "red form-control"}   type="number" value={shippingInfo.phonenumber} onChange={(e) => setyournumber(e)}/>
                             {numbererror && <span>{errornumbermsg}</span>}
                         </div>
-  
-
-                    {email && userrname && phonenumber.length === 10 && city ?
-                    <button onClick={() => setbred("paymentpage")}>payment page</button> : ""}
                 </form>
             </div>
-            {<div className='col-md-3'>
-                <h2>Total : {<Price price={gettotal} />}</h2>
-                <h5>Special Discount : {showdis ? getvalue : ""} </h5>
-                <button onClick={handledis}>show discount</button>
-
-            </div>}
+            <div className='col-md-4 summery'>
+                 <h1>Order Summery</h1>   
+                 <div className='sum-box'>
+                 <h2>SubTotal : {<Price price={gettotal} />}</h2>
+                 <h2>Tax : {tax}</h2>
+                 <h2>Shipping  : {shippingcharge}</h2>
+                 <h2>Special Discount : {getvalue} </h2>
+                 </div>
+                 <h1>Total : <Price price={gettotal - getvalue - shippingcharge - tax }/></h1>   
+            </div>
+             <div className='ships-btn'>
+             <button onClick={() => setbred("cartpage") }>cart</button>        
+            {email && userrname && phonenumber.length === 10 && city ?
+                    <button onClick={() => setbred("paymentpage")}>payment page</button> : ""}
+             </div>
+           
         </div>
     )
 }
