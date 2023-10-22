@@ -116,7 +116,7 @@ const minprice = cartItems?.map((e)=> {
       { bred === "paymentpage" && 
         <div className='col-12'>
           <Payment/>
-          <button onClick={() => setbred("shippingpage") }>Shipping</button>
+          {/* <button onClick={() => setbred("shippingpage") }>Shipping</button> */}
         </div>
       }
 

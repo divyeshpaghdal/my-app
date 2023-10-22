@@ -28,7 +28,7 @@ import logo from '../img/logo.png'
             <Link to="/category"><li>Category</li></Link>
             <Link to="/upcoming"><li>Upcoming</li></Link>
             <Link to="/contact"><li>Contact</li></Link>
-            {/* <Link to="/admin"><li>Admin Panel</li></Link> */}
+            <Link to="/admin"><li>Admin Panel</li></Link>
         </ul>
       <div className='user'>
      <span onClick={changefilterquery}><i class="fas fa-search"></i></span>

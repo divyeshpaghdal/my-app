@@ -57,7 +57,7 @@ const deccrement = () => {
 
   return (
     <>
-      <div className='container padding-80 product-page'>
+      <div className='container padding-80 product-page spacing-top'>
         <div className='row'>
           <div className='col-md-6 left'>
             <div><img src={info?.imgurl} /></div>

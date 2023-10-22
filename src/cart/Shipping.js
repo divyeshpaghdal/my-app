@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { useNewcart } from './DubcartApi'
 import Price from '../pages/Price'
+import { useAuth } from '../AuthcontextApi'
 
 const Shipping = () => {
     const [emailerror, setemailerror] = useState(false)
@@ -11,10 +12,13 @@ const Shipping = () => {
     const [errornamemsg, setnameerrormsg] = useState()
     const [errorcitymsg, setcityerrormsg] = useState()
     const [errornumbermsg, seterrornumbermsg] = useState()
+    const {user} = useAuth()
     const { shippingInfo, gettotal, setshippingInfo, bred, setbred,handledis,showdis,getvalue} = useNewcart()
     const {email,userrname,city,phonenumber} = shippingInfo
     const tax = 23;
     const shippingcharge = 40
+   console.log(user)
+
     const setemail = (e) => {
             if(email === ""){
                 setemailerror(true)
@@ -46,9 +50,9 @@ const Shipping = () => {
         if(city === ""){
             setcityerror(true)
             setcityerrormsg("Add your valid City")
-        }else if(city.length < 3) {
+        }else if(city.length < 10) {
             setcityerror(true)
-            setcityerrormsg("City more than 3 charter")
+            setcityerrormsg("City more than 10 charter")
         }else {
             setcityerror(false)
         }
@@ -92,14 +96,14 @@ const Shipping = () => {
 
 
                     <div className="mb-3 col-12"  id='#city'>
-                        <label className="form-label">City</label>
+                        <label className="form-label">Address /  City</label>
                         <input className={!cityerror ? "green form-control" : "red form-control"} type="text" value={shippingInfo.city} onChange={(e) => setyourcity(e)}/>
                         {cityerror && <span>{errorcitymsg}</span>}
                     </div>
                 
                     <div className="col-12" id='#email'>
                             <label className="form-label">Phone Number</label>
-                            <input className={!numbererror ? "green form-control" : "red form-control"}   type="number" value={shippingInfo.phonenumber} onChange={(e) => setyournumber(e)}/>
+                            <input className={!numbererror ? "green form-control" : "red form-control"}    type="tel"  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" value={shippingInfo.phonenumber} onChange={(e) => setyournumber(e)}/>
                             {numbererror && <span>{errornumbermsg}</span>}
                         </div>
                 </form>
@@ -117,9 +121,8 @@ const Shipping = () => {
              <div className='ships-btn'>
              <button onClick={() => setbred("cartpage") }>cart</button>        
             {email && userrname && phonenumber.length === 10 && city ?
-                    <button onClick={() => setbred("paymentpage")}>payment page</button> : ""}
+                <button onClick={() => setbred("paymentpage")}>payment</button> : ""}
              </div>
-           
         </div>
     )
 }

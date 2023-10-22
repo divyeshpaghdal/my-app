@@ -4,6 +4,9 @@ import Price from '../pages/Price'
 import { useEffect } from 'react'
 import { db } from '../firebase'
 import { addDoc, collection } from '@firebase/firestore'
+import Process from '../payment/Process'
+import Success from '../payment/Success'
+import { useAuth } from '../AuthcontextApi'
 
 const Payment = () => {
   const [cardyour, setcardyour] = useState()
@@ -12,7 +15,8 @@ const Payment = () => {
   const [experror, setexperror] = useState(false)
   const [successmsg, setsuccessmsg] = useState(true)
   const [paymentchange, setpaymentchange] = useState("entry")
-  const { shippingInfo, cartItems, checkout, paymentInfo, setpaymentInfo, gettotal} = useNewcart()
+  const {user} = useAuth()
+  const { shippingInfo, cartItems, checkout, paymentInfo, setpaymentInfo, gettotal, setCartItems} = useNewcart()
   const { email, userrname, address, city, phonenumber } = shippingInfo
   const { cardnumber, cardname, exp, cvv} = paymentInfo
   let result
@@ -66,12 +70,13 @@ console.log(idddd)
 const paymentdone = () => {
   paymentidgenerate()
   setpaymentchange("donepayment")
-  setTimeout(() => {
-    setsuccessmsg(false)
-   }, 5000);
  
+  setTimeout(() => {
+  setsuccessmsg(false)
+   }, 5000)
    const paymentdetailsave = {
     idddd,
+    useremail:user?.email,
     shippingInfo,
     paymentInfo,
     cartItems,
@@ -96,7 +101,7 @@ const paymentdone = () => {
 
   return (
     <>
-      <div className='col-md-12'>
+      <div className={successmsg ? "col-md-12" : "col-md-12 paymentdone"}>
           <div>
             <table>
               <tbody>
@@ -124,18 +129,20 @@ const paymentdone = () => {
         <div className='pay-shipping'>
           <h1>shipping details</h1>
           <h3>Email : {email}</h3>
-          <h3>userrname : {userrname}</h3>
-          <h3>city : {city}</h3>
+          <h3>Name : {userrname}</h3>
+          <h3>Address : {city}</h3>
           <h3>phonenumber : {phonenumber}</h3>
         </div>
       </div>
-      <div className='row my-5 payment-info justify-content-center'>
+      
+      <div className='row payment-info justify-content-center'>
+      <h1>Payment details</h1>
         {
           paymentchange === "entry" && 
-          <div className="col-4">
+          <div className="col-6">
           <div className="card mx-auto">
             <form className="card-details ">
-              <div className="form-group mb-0">
+              <div className="form-group">
                 <p className="text-warning mb-0">Card Number</p>
                 <input type="number"  name="card-num" placeholder="xxxx xxxx xxxx xxxx"  id="cno" minLength="16" maxLength="16" onChange={(e)=>setyourcard(e)} />
                 {carderror && <span className={!carderror ? "green" : "red"}>{cardyour}</span>}
@@ -145,22 +152,21 @@ const paymentdone = () => {
                 <p className="text-warning mb-0">Cardholder's Name</p>
                 <input type="text" name="name" placeholder="Name" size="17" onChange={(e)=>setpaymentInfo({...paymentInfo,cardname:e.target.value})} />
               </div>
-              <div className="form-group pt-2">
+              <div className="form-group">
                 <div className="row d-flex">
                   <div className="col-sm-6">
                     <p className="text-warning mb-0">Expiration</p>
                     <input type="text" name="exp" placeholder="MM/YYYY" size="7" id="exp" minLength="7" maxLength="7" onChange={(e)=>yourderxp(e)} />
-                    {experror && <span className={!carderror ? "green" : "red"}>{expyour}</span>}
+                    {experror && <span className={!experror ? "green" : "red"}>{expyour}</span>}
                   </div>
                   <div className="col-sm-6">
                     <p className="text-warning mb-0">Cvv</p>
                     <input type="text" name="cvv" placeholder="&#9679;&#9679;&#9679;" size="1" minLength="3" maxLength="3" onChange={(e)=>setpaymentInfo({...paymentInfo,cvv:e.target.value})}/>
                   </div>
-                  <div className="col-sm-4 pt-0">
-                    {/* { cardnumber && cardname && exp && cvv && !carderror && !experror  ?
+                  <div className="">
+                    { cardnumber && cardname && exp && cvv && !carderror && !experror  ?
                     <button onClick={paymentsubmit} className="btn btn-primary">submit</button> : ""
-                    } */}
-                    <button onClick={paymentsubmit} className="btn btn-primary">submit</button>
+                    }
                   </div>
                 </div>
               </div>
@@ -172,8 +178,8 @@ const paymentdone = () => {
        {
          paymentchange === "process" && 
          <div className="card px-4">
-           <button onClick={()=>setpaymentchange("entry")} className="btn btn-primary">back</button>
-         <div className="debit-card my-3">
+          
+         <div className="debit-card">
              <div className="d-flex flex-column h-100">
                  <label className="d-block">
                      <div className="d-flex position-relative">
@@ -184,23 +190,26 @@ const paymentdone = () => {
                          </div>
                      </div>
                  </label>
-                 <div className="mt-auto fw-bold d-flex align-items-center justify-content-between">
+                 <div className="mt-auto fw-bold d-flex align-items-center justify-content-between security">
                      <p>{cardnumber}</p>
                      <p>{exp}</p>
                  </div>
              </div>
          </div>
-
-         <div onClick={() => paymentdone() } className="btn mb-4">
+        <div className='pay-bot'>
+         {/* <button onClick={()=>setpaymentchange("entry")} className="btn btn-primary">back</button> */}
+         <button onClick={() => paymentdone() } className="btn mb-4">
              Payment Now ${gettotal}
-         </div>
+         </button>
+        </div>
          </div>
        }
+      
 
        {
          paymentchange === "donepayment" && 
          <div>
-           { successmsg ? "process" : "Success"} 
+           { successmsg ?  <Process/> : <Success paymentIDD={idddd}/>} 
          </div>
        }
         </div>

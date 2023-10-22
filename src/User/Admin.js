@@ -5,11 +5,13 @@ import OrderProduct from './OrderProduct'
 import Upproduct from './Upproduct'
 import { useAuth } from '../AuthcontextApi'
 import { useProduct } from '../ProductApi'
+import { useNewcart } from '../cart/DubcartApi'
 
 const Admin = () => {
     const [admintab, setadmintab] = useState("user")
     const {user} = useAuth()
     const {totaluser,listcopy} = useProduct()
+    const {ordergetdata} = useNewcart()
     console.log(user)
   
   const handlechange = (orderset) => {
@@ -20,7 +22,7 @@ const Admin = () => {
    })
    console.log(upcomingitem)
   return (
-    <div className='container padding-80'>
+    <div className='container padding-80 spacing-top'>
        <div className='user-details'>
            <div className='profile'>
             <img src={user?.photoURL}/>
@@ -43,7 +45,7 @@ const Admin = () => {
         </div>
         <div className='sub-data'>
             <h4>Total Orders</h4>
-            <p>-</p>
+            <p>{ordergetdata?.length}</p>
         </div>
      </div>
 

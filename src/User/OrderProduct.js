@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNewcart } from '../cart/DubcartApi'
 import { Link } from 'react-router-dom'
+import Price from '../pages/Price'
 
 const OrderProduct = () => {
   const {ordergetdata} = useNewcart()
@@ -12,12 +13,12 @@ const OrderProduct = () => {
         <thead>
         <tr>
               <th className='number'>No.</th>
-              <th className='photos'>Photo</th>
               <th>Name</th>
               <th className='price'>Email</th>
               <th className='cates'>OrderID</th>
-              <th className='distock'>Date</th>
+              <th className='distock'>Payment Date</th>
               <th className='distock'>Price</th>
+              <th className='distock'>-</th>
             </tr>
         </thead>
         <tbody>
@@ -26,16 +27,13 @@ const OrderProduct = () => {
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>
-                  <img src={e?.userinfodetails?.url}/>
-                </td>
-                <td>{e?.userinfodetails?.displayName}</td>
-                <td>{e?.userinfodetails?.email}</td>
-                <td>{e?.paymentId}</td>
+                <td>{e?.shippingInfo?.userrname}</td>
+                <td>{e?.shippingInfo?.email}</td>
+                <td>{e?.idddd}</td>
                 <td>{e?.date}</td>
-                <td>{e?.gettotal}</td>
+                <td>{<Price price={e?.gettotal}/>}</td>
                 <td>
-                <Link to={`/orderlist/${e?.paymentId}`}><button>order List</button></Link>
+                <Link to={`/orderlist/${e?.idddd}`}><button><i class="fas fa-list"></i></button></Link>
                 </td>
               </tr>
             )

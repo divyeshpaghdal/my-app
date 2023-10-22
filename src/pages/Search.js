@@ -14,7 +14,11 @@ const Search = () => {
             return e.title?.toLowerCase().includes(searchdata?.toLowerCase())
         })
         console.log(finditem)
-        setfilter(finditem)
+        if(searchdata?.length > 1) {
+            setfilter(finditem)
+        }else {
+            setfilter([])
+        }
     }
    const closesearchquery = () => {
     setsearchfilter(false)
@@ -22,9 +26,10 @@ const Search = () => {
  
     return (
         <div className='searchscreen'>
-        <div className='searchpage container padding-80'>
-            <button onClick={closesearchquery}><i class="fas fa-times"></i></button>
-            <input value={searchdata} onChange={(e) => handlesearch(e)} placeholder='Search your product'/>
+        <div className='searchpage container'>
+            <h1>Search Your Product</h1>
+            <input value={searchdata} onChange={(e) => handlesearch(e)} placeholder='Search...'/>
+            <span onClick={closesearchquery}><i class="fas fa-times"></i></span>
             <div>
                 <ul>
                     {

@@ -65,7 +65,7 @@ const CartdubProvider = ({ children }) => {
 // ---ordergetdata---
 const getorderdetails = async () => {
   try {
-    const userRef = collection(db,"orders")
+    const userRef = collection(db,"neworders")
     const ordervalue = await getDocs(userRef)
     let orderbox = []
     ordervalue.forEach((doc) => {

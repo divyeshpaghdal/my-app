@@ -9,12 +9,12 @@ const OrdergetList = () => {
    console.log(ordergetdata,id)
    
    const findorderId = ordergetdata?.find((e)=> {
-    return e.paymentId === id
+    return e.idddd === id
    })
   console.log(findorderId,"findorderId")
 
   return (
-    <div className='container padding-80 order-list'>
+    <div className='container padding-80 order-list spacing-top'>
         <h1>Your Order List</h1>
         <div className='row'>
         {
