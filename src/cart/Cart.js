@@ -86,13 +86,13 @@ const minprice = cartItems?.map((e)=> {
                       <td><Link to={`/product/${e?.id}`}><h5 className="card-title">{e?.title?.slice(0, 30)}</h5></Link></td>
                       <td>
                         <div className='count'>
-                        <button onClick={()=>setdec({idd:e?.id,stocckk:e?.stock})}><i class="fas fa-minus"></i></button>
+                        <button onClick={()=>setdec({idd:e?.id,stocckk:e?.stock})}><i className="fas fa-minus"></i></button>
                           {e?.quantity}
-                          <button onClick={()=>setinc({idd:e?.id,stocckk:e?.stock})}><i class="far fa-plus"></i></button>
+                          <button onClick={()=>setinc({idd:e?.id,stocckk:e?.stock})}><i className="far fa-plus"></i></button>
                         </div>
                       </td>
                       <td><Price price= {e?.price*e?.quantity}/></td>
-                     <td onClick={() => removeFromCart(e?.id)}><i class="fas fa-trash"></i></td>
+                     <td onClick={() => removeFromCart(e?.id)}><i className="fas fa-trash"></i></td>
                     </tr>
                   )
                 })

@@ -33,7 +33,7 @@ const OrderProduct = () => {
                 <td>{e?.date}</td>
                 <td>{<Price price={e?.gettotal}/>}</td>
                 <td>
-                <Link to={`/orderlist/${e?.idddd}`}><button><i class="fas fa-list"></i></button></Link>
+                <Link to={`/orderlist/${e?.idddd}`}><button><i className="fas fa-list"></i></button></Link>
                 </td>
               </tr>
             )

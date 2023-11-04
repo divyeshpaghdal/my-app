@@ -105,8 +105,8 @@ const ProductUser = () => {
                                <td>{e?.category}</td>
                                <td>{e?.discount}</td>
                                <td>{e?.stock}</td>
-                               <td><button onClick={() => deleteproduct(e)}><i class="fas fa-trash-alt"></i></button></td>
-                               <td><button onClick={() => updateproduct(e)}><i class="fas fa-edit"></i></button></td>
+                               <td><button onClick={() => deleteproduct(e)}><i className="fas fa-trash-alt"></i></button></td>
+                               <td><button onClick={() => updateproduct(e)}><i className="fas fa-edit"></i></button></td>
                               </tr>
                             )
                         })

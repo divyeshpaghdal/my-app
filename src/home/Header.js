@@ -29,11 +29,12 @@ import logo from '../img/logo.png'
             <Link to="/upcoming"><li>Upcoming</li></Link>
             <Link to="/contact"><li>Contact</li></Link>
             <Link to="/admin"><li>Admin Panel</li></Link>
+            <Link to="/chat"><li>chat</li></Link>
         </ul>
       <div className='user'>
-     <span onClick={changefilterquery}><i class="fas fa-search"></i></span>
-      <Link to="/userprofile"><h4><i class="fas fa-user"></i></h4></Link>
-      <Link to="/cart"><p className='cartbtn'><i class="fas fa-cart-plus"></i>{getcart > 0 ? <span>{getcart}</span> : ""}</p></Link>
+     <span onClick={changefilterquery}><i className="fas fa-search"></i></span>
+      <Link to="/userprofile"><h4><i className="fas fa-user"></i></h4></Link>
+      <Link to="/cart"><p className='cartbtn'><i className="fas fa-cart-plus"></i>{getcart > 0 ? <span>{getcart}</span> : ""}</p></Link>
         </div>
         </div>
     </div>
@@ -47,4 +48,4 @@ export default Header
   //   <Link to="/product"><li>Admin Panel</li></Link> : ""  
   // }
 
-  // <Link to="/userprofile"><h4><i class="fas fa-user"></i>Welcome {user?.displayName}</h4></Link>
+  // <Link to="/userprofile"><h4><i className="fas fa-user"></i>Welcome {user?.displayName}</h4></Link>

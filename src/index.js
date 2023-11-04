@@ -11,6 +11,7 @@ import { ProductProvider } from './ProductApi';
 import { CartProvider } from './cart/CartApi';
 import { CartdubProvider } from './cart/DubcartApi';
 import Display from './Display';
+import { ChatProvider } from './chat/ChatApi';
 
 
 
@@ -22,7 +23,9 @@ root.render(
     <AuthProvider>
       <ProductProvider>
           <CartdubProvider>
-           <Display/>
+            <ChatProvider>
+             <Display/>
+           </ChatProvider>
            </CartdubProvider>
        </ProductProvider>
     </AuthProvider>

@@ -31,7 +31,7 @@ const UserProfille = () => {
         <h3>LastSignInTime : {user?.metadata?.lastSignInTime}</h3>
         <h3>Database : {user?.providerId}</h3>
         <div className='log'>
-        <button type="submit" onClick={logOut}><i class="fas fa-sign-out-alt"></i></button>
+        <button type="submit" onClick={logOut}><i className="fas fa-sign-out-alt"></i></button>
         </div>
        </div> 
        {getuser.length > 0 ? 
@@ -61,7 +61,7 @@ const UserProfille = () => {
                 <td>{e?.date}</td>
                 <td>{<Price price={e?.gettotal}/>}</td>
                 <td>
-                <Link to={`/orderlist/${e?.idddd}`}><button><i class="fas fa-list"></i></button></Link>
+                <Link to={`/orderlist/${e?.idddd}`}><button><i className="fas fa-list"></i></button></Link>
                 </td>
               </tr>
             )

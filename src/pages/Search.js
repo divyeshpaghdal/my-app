@@ -29,7 +29,7 @@ const Search = () => {
         <div className='searchpage container'>
             <h1>Search Your Product</h1>
             <input value={searchdata} onChange={(e) => handlesearch(e)} placeholder='Search...'/>
-            <span onClick={closesearchquery}><i class="fas fa-times"></i></span>
+            <span onClick={closesearchquery}><i className="fas fa-times"></i></span>
             <div>
                 <ul>
                     {

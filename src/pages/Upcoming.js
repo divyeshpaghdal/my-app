@@ -23,10 +23,8 @@ const Upcoming = () => {
                           )
                       })
                   }
-
               </div>
           </div>
-          <Testi/>
       </>
   )
 }

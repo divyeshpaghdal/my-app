@@ -3,10 +3,10 @@ import React from 'react'
 const Process = () => {
   return (
     <div>
-      <div class="payment-loader-container">
-  <div class="payment-loader">
-    <div class="payment-circle">
-      <div class="payment-inner-circle">
+      <div className="payment-loader-container">
+  <div className="payment-loader">
+    <div className="payment-circle">
+      <div className="payment-inner-circle">
       </div>
       <h1>
         $

@@ -1368,3 +1368,38 @@ input[type="radio"]:hover {
   margin-bottom: 20px;
   text-align: center;
 }
+
+/* --- */
+.chat-page {
+  max-width: 510px;
+  height: calc(100vh - 200px);
+  border: 1px solid #000;
+  margin: 150px auto 50px;
+  position: relative;
+  padding: 15px;
+}
+.chat-page h1 {
+  text-align:center;
+}
+.chat-page h1::after {
+  display:none;
+}
+.chat-page form {
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 30px);
+  left: 0;
+  margin: 15px;
+}
+.rightset {
+  text-align: right;
+}
+.chatlist {
+  overflow-y: scroll;
+  height: calc(100vh -  370px);
+}
+.chatlist::-webkit-scrollbar {
+  display: none;
+}

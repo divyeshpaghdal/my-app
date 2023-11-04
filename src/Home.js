@@ -18,8 +18,8 @@ import Abouts from './pages/Abouts';
       <LatestProduct/>
       <Abouts/>
       <Upcoming/>
-      <Popular/>
       <Testi/>
+      <Popular/>
       <Shortest/>
     </div>
   )
