@@ -12,7 +12,6 @@ const [getuserchat, setgetuserchat] = useState([])
 let current = new Date();
 let cTime = current.getHours() + ":" + current.getMinutes()
 
-console.log(getuserchat)
 
 const handlechat = async (e) => {
   e.preventDefault()
@@ -24,6 +23,7 @@ const handlechat = async (e) => {
       usersend:user?.displayName,
       timestamp:serverTimestamp()
     });
+    console.log(Number(cTime),"time")
     getchatdata()
     setsendmsg("")
   } catch (e) {
@@ -43,7 +43,7 @@ const getchatdata = async () => {
 
 useEffect(() => {
   getchatdata()
-}, [])
+}, [sendmsg])
 
   return (
      <ChatContext.Provider value={{
