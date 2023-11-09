@@ -12,6 +12,7 @@ const Chat = () => {
  })
  const setNewUserlist = new Set(userlist)
  const newfitleruserlist = Array.from(setNewUserlist)
+
  const fitleruserlist = newfitleruserlist.filter((e)=> {
   return e !== user.displayName
  })
@@ -30,9 +31,10 @@ console.log(getfinduserchat)
 const jointchat = getloginchatuser.concat(getfinduserchat)
 console.log(jointchat)
 
-jointchat.sort(function (a, b) {
-  return a.cTime.localeCompare(b.cTime);
-}); 
+
+const res = jointchat?.sort((a,b)=>
+  a?.cdate.localeCompare(b?.cdate)||a?.ctime.localeCompare(b?.ctime));
+console.log(res);
 
 
 
@@ -53,12 +55,12 @@ jointchat.sort(function (a, b) {
         <div className='col-9'>
         <div className='chatlist' id='data'>
      {
-         jointchat && jointchat?.map((e,index)=> {
+         res && res?.map((e,index)=> {
           return (
             <div key={index} className={user.displayName === e.usersend ? "rightset" : "leftset"}>
               <h2>{e.usersend}</h2>
               <h3>{e.sendmsg}</h3>
-              <p>{e.cTime}</p>
+              <p>{ e.cdate} {e.ctime}</p>
             </div>
           )
          })

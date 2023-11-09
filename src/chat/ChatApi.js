@@ -10,7 +10,8 @@ const { user } = useAuth()
 const [sendmsg, setsendmsg] = useState("")
 const [getuserchat, setgetuserchat] = useState([])
 let current = new Date();
-let cTime = current.getHours() + ":" + current.getMinutes()
+let cdate = current.getFullYear()  + "-" + current.getMonth() + "-" + current.getDate()
+let ctime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds()
 
 
 const handlechat = async (e) => {
@@ -19,11 +20,11 @@ const handlechat = async (e) => {
     const chatRef = collection(db, 'chatmsg')
     const docRef = await addDoc(chatRef,{
       sendmsg,
-      cTime,
+      cdate,
+      ctime,
       usersend:user?.displayName,
       timestamp:serverTimestamp()
     });
-    console.log(Number(cTime),"time")
     getchatdata()
     setsendmsg("")
   } catch (e) {
@@ -33,7 +34,8 @@ const handlechat = async (e) => {
 
 const getchatdata = async () => {
   const userRef = collection(db, "chatmsg") 
-  const chatvalue = await getDocs(query(userRef, orderBy('timestamp')));
+  //const chatvalue = await getDocs(query(userRef, orderBy('timestamp')));
+  const chatvalue = await getDocs(userRef);
   let chatbox = []
   chatvalue.forEach((doc) => {
     chatbox.push({ ...doc.data() })
