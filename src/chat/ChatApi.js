@@ -1,57 +1,61 @@
-import { createContext, useState, useEffect, useContext } from 'react';
-import { addDoc, collection,query,onSnapshot,orderBy,getDocs, serverTimestamp} from '@firebase/firestore'
-import { db } from '../firebase';
+import { createContext, useState, useEffect, useContext , useRef } from 'react';
+import {
+  query,
+  collection,
+  orderBy,
+  onSnapshot,
+  limit,
+} from "firebase/firestore";
+import { db } from "../firebase";
 import { useAuth } from '../AuthcontextApi';
 
 const ChatContext = createContext()
 
 const ChatProvider = ({ children }) => {
 const { user } = useAuth()
-const [sendmsg, setsendmsg] = useState("")
+const [messages, setMessages] = useState([]);
 const [getuserchat, setgetuserchat] = useState([])
 let current = new Date();
 let cdate = current.getFullYear()  + "-" + current.getMonth() + "-" + current.getDate()
 let ctime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds()
 
 
-const handlechat = async (e) => {
-  e.preventDefault()
-  try {
-    const chatRef = collection(db, 'chatmsg')
-    const docRef = await addDoc(chatRef,{
-      sendmsg,
-      cdate,
-      ctime,
-      usersend:user?.displayName,
-      timestamp:serverTimestamp()
+const getchatdata = async () => {
+  const q = query(
+    collection(db, "chatmessages"),
+    orderBy("createdAt", "desc"),
+    limit(50)
+  );
+  const unsubscribe = onSnapshot(q, (QuerySnapshot) => {
+    const fetchedMessages = [];
+    QuerySnapshot.forEach((doc) => {
+      fetchedMessages.push({ ...doc.data(), id: doc.id });
     });
-    getchatdata()
-    setsendmsg("")
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
+    const sortedMessages = fetchedMessages.sort(
+      (a, b) => a.createdAt - b.createdAt
+    );
+    setMessages(sortedMessages);
+  });
+  return () => unsubscribe;
+};
+
+
+const handlechat = async (e) => {
+  getchatdata()
 }
 
-const getchatdata = async () => {
-  const userRef = collection(db, "chatmsg") 
-  //const chatvalue = await getDocs(query(userRef, orderBy('timestamp')));
-  const chatvalue = await getDocs(userRef);
-  let chatbox = []
-  chatvalue.forEach((doc) => {
-    chatbox.push({ ...doc.data() })
-  })
-  setgetuserchat(chatbox)
-};
+
 
 useEffect(() => {
   getchatdata()
-}, [sendmsg])
+}, []);
+
+
 
   return (
      <ChatContext.Provider value={{
-         sendmsg, setsendmsg,
-         handlechat,
-         getuserchat
+       messages, setMessages,
+         getuserchat,handlechat
      }} >
       {children}
     </ChatContext.Provider>

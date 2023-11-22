@@ -18,6 +18,7 @@ import Search from './pages/Search';
 import { useProduct } from './ProductApi';
 import ErrorPage from './home/ErrorPage';
 import Chat from './chat/Chat';
+import Newchat from './chat/Newchat';
  
 const App = () => {
   const {searchfilter} = useProduct()
@@ -41,7 +42,7 @@ return (
               <Route path="/cart" element={<Cart/>} />  
               <Route path="/orderlist/:id" element={<OrdergetList/>} />
               <Route path="/userprofile" element={<UserProfille/>} />    
-              <Route path="/chat" element={<Chat/>} />    
+              <Route path="/chat" element={<Newchat/>} />    
               <Route path="*" element={<ErrorPage/>} />                  
         </Route>
       </Routes>
